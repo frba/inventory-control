@@ -15,6 +15,11 @@ inventory = "in/inventory.db"
 localConn = sqlite3.connect(inventory)
 localCursor = localConn.cursor()
 
+class colours:
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    BLUE = '\033[94m'
+    RED = '\033[93m'
 
 def updateLocalDB(item):
     localCursor.execute("UPDATE data SET Volume = Volume-1 WHERE Item = '" + str(item) + "'")
@@ -38,9 +43,9 @@ def verifyandmanipulateinvetory(itens):
 
             # if the result from the db is empty print a warning
             if len(result) < 1:
-                print "\033[1mWarning:\033[0m in " + '\033[1m' + str(
-                    itens[0]) + '\033[0m' + " the item " + '\033[1m' + str(
-                    itens[i]) + '\033[0m' + " is not available in the inventory"
+                print colours.BOLD + "Warning:" + colours.ENDC +" in " + colours.BOLD + str(
+                    itens[0]) + colours.ENDC + " the item " + colours.BOLD + str(
+                    itens[i]) + colours.ENDC + " is not available in the inventory"
                 return None
             # Keep the result
             else:
@@ -94,10 +99,10 @@ def readfile(path_in, path_out):
                 volume = result[0].__getitem__(4)
                 num = int(filter(str.isdigit, str(itens[0])))
 
-                #print output result in terminal
-                print "\033[1m"+str(itens[0]) + "\033[0m"+ " : " + str(item) + "," + str(shelf) + "," + str(bin) + "," + "box_" + str(num) + "," + str(volume)
+                # print output result in terminal
+                print colours.BOLD + str(itens[0]) + colours.ENDC + " : " + str(item) + "," + str(shelf) + "," + str(bin) + "," + "box_" + str(num) + "," + str(volume)
 
-                #print result in output file
+                # print result in output file
                 fileout.write(str(itens[0]) + "," + str(item) + "," + str(shelf) + "," + str(bin) + "," + "box_" + str(num) + "," + str(volume) + "\n")
 
     fileout.close()
